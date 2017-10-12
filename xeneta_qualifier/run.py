@@ -41,11 +41,11 @@ X_train, y_train = fetchData('data/train.csv')
 
 forest = runForest(X_train, y_train)
 forest_scores = getScores(forest, X_test, y_test)
-print 'Random Forest Scores: ', forest_scores
+print('Random Forest Scores: ', forest_scores)
 
 sgd = runSGD(X_train, y_train)
 sgd_scores = getScores(sgd, X_test, y_test)
-print 'SGD Scores: ', sgd_scores
+print('SGD Scores: ', sgd_scores)
 
 
 
