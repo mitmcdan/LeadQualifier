@@ -1,5 +1,5 @@
 import re
-import cPickle
+import pickle
 import xlrd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
@@ -45,7 +45,7 @@ def cleanUp(descriptions):
 
 def getDescriptionsFromSheet(sheet):
     descriptions = []
-    for index in xrange(1, sheet.nrows):
+    for index in range(1, sheet.nrows):
         description = sheet.cell_value(index, 1)
         descriptions.append(description)
     return descriptions
@@ -116,7 +116,7 @@ X_test = transform(X_test, tfidf_transformer)
 
 forest = runForest(X_train, y_train)
 forest_scores = getScores(forest, X_test, y_test)
-print 'Random Forest scores: ', forest_scores
+print('Random Forest scores: ', forest_scores)
 
 # print 'Random Gaussian Naive Bayes score: ', gnb_score
 
