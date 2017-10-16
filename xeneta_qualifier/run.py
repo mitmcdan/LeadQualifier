@@ -1,6 +1,7 @@
 import csv
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import precision_recall_fscore_support
 import numpy as np
@@ -36,7 +37,14 @@ def runGBC(X_train, y_train):
   boost = GradientBoostingClassifier(loss='deviance', learning_rate=0.1, n_estimators=100, subsample=1.0, criterion='friedman_mse', min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_depth=3, min_impurity_decrease=0.0, min_impurity_split=None, init=None, random_state=None, max_features=None, verbose=0, max_leaf_nodes=None, warm_start=False, presort='auto')
   boost.fit(X_train, y_train)
   return boost
+
+# Ada Boost Classifier
+def runAda(X_train, y_train):
+  ada = AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm='SAMME.R', random_state=None)
+  ada.fit(X_train, y_train)
+  return ada
  
+ # Scores
 def getScores(clf, X, y):
     predictions = clf.predict(X)
     scores = precision_recall_fscore_support(y, predictions, average='binary')
@@ -46,6 +54,7 @@ def getScores(clf, X, y):
 X_test, y_test = fetchData('data/test.csv')
 X_train, y_train = fetchData('data/train.csv')
 
+# Run classifiers
 forest = runForest(X_train, y_train)
 forest_scores = getScores(forest, X_test, y_test)
 print('Random Forest Scores: ', forest_scores)
@@ -58,3 +67,6 @@ boost = runGBC(X_train, y_train)
 boost_scores = getScores(boost, X_test, y_test)
 print('Gradient Boosting Scores: ', boost_scores)
 
+ada = runAda(X_train, y_train)
+ada_scores = getScores(ada, X_test, y_test)
+print('Ada Boost Scores: ', ada_scores)
