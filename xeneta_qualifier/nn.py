@@ -1,8 +1,11 @@
+import os
 import tensorflow as tf
 import csv
 import numpy as np
 from random import randrange
 
+# Supress errors
+os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 # This net is not working, as it predicts all 0's or all 1's at the moment.
 
 # variables for the net
@@ -62,20 +65,21 @@ y =  tf.nn.softmax(tf.matmul(hidden_layer_2, W_3) + b_3)
 
 
 # Manually calculating the loss
-#cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
+cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1]))
 
 # Automatically calculating the loss
-cross_entropy = tf.reduce_mean(
-     tf.nn.softmax_cross_entropy_with_logits(y, y_)
-)
+# cross_entropy = tf.reduce_mean(
+#     tf.nn.softmax_cross_entropy_with_logits(y, y_)
+# )
 
 # possible other loss function, if not one hot vector
-#loss = tf.reduce_mean(tf.abs(tf.sub(y_, y)))
+#cross_entropy = tf.reduce_mean(tf.abs(tf.subtract(y_, y)))
+
 
 train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
 
 # we need to initialize all variables
-init = tf.initialize_all_variables()
+init = tf.global_variables_initializer()
 sess = tf.Session()
 sess.run(init)
 
@@ -103,11 +107,11 @@ for i in range(1000):
             x: X_test,
             y_: y_test
         })
-        print 'cross_entropy_out:', cross_entropy_out
+        print('cross_entropy_out:', cross_entropy_out)
 
 correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-print 'accuracy: ', sess.run(accuracy, feed_dict={x: X_test, y_: y_test})
+print('accuracy: ', sess.run(accuracy, feed_dict={x: X_test, y_: y_test}))
 
 
 
