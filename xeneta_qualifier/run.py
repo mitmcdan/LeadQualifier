@@ -2,6 +2,7 @@ import csv
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import BaggingClassifier
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import precision_recall_fscore_support
 import numpy as np
@@ -44,11 +45,17 @@ def runAda(X_train, y_train):
   ada.fit(X_train, y_train)
   return ada
  
+ # Bagging Classifier
+def runBag(X_train, y_train):
+  bag = BaggingClassifier(base_estimator=None, n_estimators=10, max_samples=1.0, max_features=1.0, bootstrap=True, oob_score=False, warm_start=False, n_jobs=1, random_state=None, verbose=0)
+  bag.fit(X_train, y_train)
+  return bag
+ 
  # Scores
 def getScores(clf, X, y):
-    predictions = clf.predict(X)
-    scores = precision_recall_fscore_support(y, predictions, average='binary')
-    return scores
+  predictions = clf.predict(X)
+  scores = precision_recall_fscore_support(y, predictions, average='binary')
+  return scores
 
 # Import data
 X_test, y_test = fetchData('data/test.csv')
@@ -70,3 +77,7 @@ print('Gradient Boosting Scores: ', boost_scores)
 ada = runAda(X_train, y_train)
 ada_scores = getScores(ada, X_test, y_test)
 print('Ada Boost Scores: ', ada_scores)
+
+bag = runBag(X_train, y_train)
+bag_scores = getScores(bag, X_test, y_test)
+print('Bagging Classifier Scores: ', bag_scores)
