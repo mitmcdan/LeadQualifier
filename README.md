@@ -1,8 +1,8 @@
 # LeadQualifier
 
-This repo is a collection of scripts we use at Xeneta to **qualify sales leads** with machine learning. Read more about this project in the Medium article [Boosting Sales With Machine Learning](https://medium.com/xeneta/boosting-sales-with-machine-learning-fbcf2e618be3).
+This repository is a collection of scripts we use at Xeneta to **qualify sales leads** with machine learning. Read more about this project in the Medium article [Boosting Sales With Machine Learning](https://medium.com/xeneta/boosting-sales-with-machine-learning-fbcf2e618be3).
 
-You can use this repo for **two things:**
+You can use this repository for **two things:**
 
 1. Try to beat our predictions using **our data** and your own algorithm
 2. Create a lead qualifier for your company, using **your own data**
